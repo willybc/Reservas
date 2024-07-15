@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\User; // Asegúrate de importar el modelo User si aún no lo has hecho
 
 class UserFactory extends Factory
 {
@@ -20,6 +21,9 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'role_id' => 1,
+            'status' => 'T',
+            'is_active' => 'T'
         ];
     }
 
@@ -35,5 +39,18 @@ class UserFactory extends Factory
                 'email_verified_at' => null,
             ];
         });
+    }
+
+    /**
+     * Define a specific default user state.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function userDefault()
+    {
+        return $this->state([
+            'name' => 'Willy',
+            'email' => 'admin@gmail.com',
+        ]);
     }
 }
