@@ -12,33 +12,43 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role_id',
+        'phone',
+        'zip',
+        'country_id',
+        'created',
+        'last_login',
+        'status',
+        'is_active',
+        'ip',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    public static $rules = [
+        'role_id' => ['required', 'numeric'],
+        'email' => ['required', 'email', 'unique:users'],
+        'password' => ['required'],
+        'status' => ['required']
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created' => 'datetime'
     ];
+
+    public function spaces() {
+        return $this -> belongsToMany(Space::class, 'spaces_users', 'user_id', 'space_id');
+    }
+
+    public function role() {
+        return $this -> belongsTo(Role::class, 'role_id');
+    }
 }
