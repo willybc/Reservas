@@ -9,7 +9,7 @@ class SpaceController extends Controller
 {
     public function index() {
         $spaces = Space::all();
-        return view('welcome', compact('spaces'));
+        return view('home', compact('spaces'));
     }
 
     public function show($id) {
