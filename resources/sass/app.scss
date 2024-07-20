@@ -6,3 +6,61 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+:root {
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+}
+
+.row-app {
+    height: 100%;
+    min-height: 100vh;
+
+    .col-left {
+        background: #F9F9F9;
+
+        nav {
+            display: flex;
+            align-items: flex-start;
+
+            height: 100%;
+            padding: 0 1rem;
+            padding-top: 2.5rem;
+            gap: 3rem;
+
+
+            ul {
+                gap: 0.8rem;
+
+                .nav-item {
+                    display: flex;
+                    align-items: center;
+
+                    i {
+                        font-size: 1.5rem;
+                        color: var(--secondary);
+                    }
+
+                    a {
+                        color: var(--secondary)
+                    }
+
+                    a:hover {
+                        color: var(--primary);
+                    }
+                }
+            }
+        }
+    }
+
+    .col-right {
+        padding-top: 2.5rem;
+        
+    }
+}

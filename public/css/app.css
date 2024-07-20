@@ -11964,3 +11964,49 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+:root {
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+}
+
+.row-app {
+  height: 100%;
+  min-height: 100vh;
+}
+.row-app .col-left {
+  background: #F9F9F9;
+}
+.row-app .col-left nav {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  padding: 0 1rem;
+  padding-top: 2.5rem;
+  gap: 3rem;
+}
+.row-app .col-left nav ul {
+  gap: 0.8rem;
+}
+.row-app .col-left nav ul .nav-item {
+  display: flex;
+  align-items: center;
+}
+.row-app .col-left nav ul .nav-item i {
+  font-size: 1.5rem;
+  color: var(--secondary);
+}
+.row-app .col-left nav ul .nav-item a {
+  color: var(--secondary);
+}
+.row-app .col-left nav ul .nav-item a:hover {
+  color: var(--primary);
+}
+.row-app .col-right {
+  padding-top: 2.5rem;
+}
