@@ -12007,6 +12007,12 @@ textarea.form-control-lg {
 .row-app .col-left nav ul .nav-item a:hover {
   color: var(--primary);
 }
+.row-app .col-left nav ul .nav-item.active a, .row-app .col-left nav ul .nav-item.active i {
+  color: var(--primary);
+}
+.row-app .col-left nav ul .nav-item.active a {
+  font-weight: 600;
+}
 .row-app .col-right {
   padding-top: 2.5rem;
 }

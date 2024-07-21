@@ -37,27 +37,27 @@
                         </a>
 
                         <ul class="nav flex-column">
-                            <li class="nav-item">
+                            <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
                                 <i class="fa-solid fa-square-poll-horizontal"></i>
-                                <a class="nav-link active" href="#">Dasboard</a>
+                                <a class="nav-link" href="#">Dasboard</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item {{ Request::is('bookings') ? 'active' : '' }}">
                                 <i class="fa-solid fa-building"></i>
                                 <a class="nav-link" href="#">Bookings</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item {{ Request::is('reservations') ? 'active' : '' }}">
                                 <i class="fa-solid fa-clipboard-list"></i>
                                 <a class="nav-link" href="#">Reservations</a>
                             </li>
 
                             <hr>
 
-                            <li class="nav-item">
+                            <li class="nav-item {{ Request::is('options') ? 'active' : '' }}">
                                 <i class="fa-solid fa-gear"></i>
                                 <a class="nav-link" href="#">Options</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item {{ Request::is('users') ? 'active' : '' }}">
                                 <i class="fa-solid fa-users"></i>
                                 <a class="nav-link" href="#">Users</a>
                             </li>

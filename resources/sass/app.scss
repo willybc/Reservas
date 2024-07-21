@@ -48,6 +48,7 @@
                     }
 
                     a {
+                        
                         color: var(--secondary)
                     }
 
@@ -55,6 +56,19 @@
                         color: var(--primary);
                     }
                 }
+
+                .nav-item.active {
+                    a, i {
+                        color: var(--primary);
+                    }
+
+                    a {
+                        font-weight: 600;
+                    }
+                    
+                }
+
+                
             }
         }
     }
