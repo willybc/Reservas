@@ -40,32 +40,35 @@
                         <ul class="nav flex-column">
                             <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
                                 <i class="fa-solid fa-square-poll-horizontal"></i>
-                                <a class="nav-link" href="#">Dasboard</a>
+                                <a class="nav-link" href="{{ route('admin.dashboard') }}">Dasboard</a>
                             </li>
 
-                            <li class="nav-item {{ Request::is('bookings') ? 'active' : '' }}">
+                            <li class="nav-item {{ Request::is('spaces') ? 'active' : '' }}">
                                 <i class="fa-solid fa-building"></i>
-                                <a class="nav-link" href="#">Bookings</a>
+                                <a class="nav-link" href="{{ route('admin.spaces' ) }}">Spaces</a>
                             </li>
                             <li class="nav-item {{ Request::is('reservations') ? 'active' : '' }}">
                                 <i class="fa-solid fa-clipboard-list"></i>
-                                <a class="nav-link" href="#">Reservations</a>
+                                <a class="nav-link" href="{{ route('admin.reservations') }}">Reservations</a>
                             </li>
 
-                            <hr>
+                            <hr class="menu-hr">
 
                             <li class="nav-item {{ Request::is('options') ? 'active' : '' }}">
                                 <i class="fa-solid fa-gear"></i>
-                                <a class="nav-link" href="#">Options</a>
+                                <a class="nav-link" href="{{ route('admin.options')}}">Options</a>
                             </li>
                             <li class="nav-item {{ Request::is('users') ? 'active' : '' }}">
                                 <i class="fa-solid fa-users"></i>
-                                <a class="nav-link" href="#">Users</a>
+                                <a class="nav-link" href="{{ route('admin.users') }}">Users</a>
                             </li>
 
                             <li class="nav-item" style="margin-top: 2rem;">
                                 <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                                <a class="nav-link" href="#">Logout</a>
+                                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
                             </li>
                         </ul>
                     </nav>
@@ -114,7 +117,7 @@
                         </div>
                     </div>
 
-                    <main class="py-4">
+                    <main>
                         @yield('content')
                     </main>
                 </div>

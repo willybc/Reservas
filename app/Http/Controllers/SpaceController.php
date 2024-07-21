@@ -16,4 +16,9 @@ class SpaceController extends Controller
         $space = Space::findOrFail($id);
         return view('spaces.space', compact('space'));
     }
+
+    public function indexAdmin() {
+        $spaces = Space::all();
+        return view('admin.spaces', compact('spaces'));
+    }
 }
