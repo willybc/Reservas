@@ -9,13 +9,19 @@
 
 :root {
     --primary: #007bff;
-    --secondary: #6c757d;
+    --secondary: #8391a2;
     --success: #28a745;
     --info: #17a2b8;
     --warning: #ffc107;
     --danger: #dc3545;
     --light: #f8f9fa;
     --dark: #343a40;
+
+    --background: #fafbfe;
+}
+
+#app {
+    background: var(--background);
 }
 
 .row-app {
@@ -23,7 +29,7 @@
     min-height: 100vh;
 
     .col-left {
-        background: #F9F9F9;
+        background: #313a46;
 
         nav {
             display: flex;
@@ -31,8 +37,12 @@
 
             height: 100%;
             padding: 0 1rem;
-            padding-top: 2.5rem;
+            padding-top: 1.5rem;
             gap: 3rem;
+
+            .navbar-brand {
+                color: var(--light);
+            }
 
 
             ul {
@@ -53,13 +63,13 @@
                     }
 
                     a:hover {
-                        color: var(--primary);
+                        color: var(--light);
                     }
                 }
 
                 .nav-item.active {
                     a, i {
-                        color: var(--primary);
+                        color: var(--light);
                     }
 
                     a {
@@ -74,7 +84,22 @@
     }
 
     .col-right {
-        padding-top: 2.5rem;
-        
+        padding-right: 0;
+        padding-left: 0;
+
+        .container-header {
+            display: flex;
+            align-items: center;
+
+            /* background: white; */
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+
+            min-height: 70px;
+
+            .row {
+                width: 100%;
+            }
+        }
     }
 }

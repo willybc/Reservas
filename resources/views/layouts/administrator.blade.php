@@ -22,6 +22,7 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -72,10 +73,9 @@
                 @endauth
 
                 <div class="col-right {{ Auth::check() ? 'col-md-10' : 'col-md-12' }}">
-                    <div class="container">
+                    <div class="container-fluid container-header">
                         <div class="row justify-content-center">
-
-                            <div class="col-md-8">
+                            <div class="{{ Auth::check() ? 'col-md-10' : 'col-md-8' }}">
                                 <ul class="navbar-nav ms-auto" style="flex-direction: row; justify-content: flex-end; gap: 2rem;">
                                     <!-- Authentication Links -->
                                     @guest

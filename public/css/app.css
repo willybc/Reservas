@@ -11966,13 +11966,18 @@ textarea.form-control-lg {
 }
 :root {
   --primary: #007bff;
-  --secondary: #6c757d;
+  --secondary: #8391a2;
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
   --danger: #dc3545;
   --light: #f8f9fa;
   --dark: #343a40;
+  --background: #fafbfe;
+}
+
+#app {
+  background: var(--background);
 }
 
 .row-app {
@@ -11980,15 +11985,18 @@ textarea.form-control-lg {
   min-height: 100vh;
 }
 .row-app .col-left {
-  background: #F9F9F9;
+  background: #313a46;
 }
 .row-app .col-left nav {
   display: flex;
   align-items: flex-start;
   height: 100%;
   padding: 0 1rem;
-  padding-top: 2.5rem;
+  padding-top: 1.5rem;
   gap: 3rem;
+}
+.row-app .col-left nav .navbar-brand {
+  color: var(--light);
 }
 .row-app .col-left nav ul {
   gap: 0.8rem;
@@ -12005,14 +12013,26 @@ textarea.form-control-lg {
   color: var(--secondary);
 }
 .row-app .col-left nav ul .nav-item a:hover {
-  color: var(--primary);
+  color: var(--light);
 }
 .row-app .col-left nav ul .nav-item.active a, .row-app .col-left nav ul .nav-item.active i {
-  color: var(--primary);
+  color: var(--light);
 }
 .row-app .col-left nav ul .nav-item.active a {
   font-weight: 600;
 }
 .row-app .col-right {
-  padding-top: 2.5rem;
+  padding-right: 0;
+  padding-left: 0;
+}
+.row-app .col-right .container-header {
+  display: flex;
+  align-items: center;
+  /* background: white; */
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  min-height: 70px;
+}
+.row-app .col-right .container-header .row {
+  width: 100%;
 }
