@@ -21,4 +21,8 @@ class SpaceController extends Controller
         $spaces = Space::all();
         return view('admin.spaces', compact('spaces'));
     }
-}
+
+    public function createAdmin(Space $space) {
+        return view('admin.spaces.create', ['space' => $space]);
+    }
+} 
