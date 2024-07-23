@@ -25,6 +25,10 @@ Route::get('/spaces/create', [SpaceController::class, 'createAdmin'])
     ->middleware(['auth'])
     ->name('admin.spaces.create');
 
+Route::post('/spaces', [SpaceController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('spaces.store');
+
 Route::get('/reservations', [ReservationController::class, 'indexAdmin'])
     ->middleware(['auth'])
     ->name('admin.reservations');
