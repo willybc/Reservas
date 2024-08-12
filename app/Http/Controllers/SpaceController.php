@@ -33,41 +33,23 @@ class SpaceController extends Controller
 
         // Almacenar la imagen en public/images
         if ($request->hasFile('image')) {
-            /* $image = Storage::disk('public')->put( '/', $request->file('image')); */
-            $file = $request->file("image");
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('images', $fileName, 'public');
+    
+            // Guardar la ruta en la base de datos
+            $space = new Space();
+            $space->title = $request->input('title');
+            $space->description = $request->input('description');
+            $space->image = $filePath; // Guardar la ruta relativa en lugar de la ruta temporal
+            $space->save();
+    
+            Log::info('Image uploaded and data saved successfully');
+            return redirect()->back()->with('success', 'Image uploaded successfully!');
         } else {
             Log::error('File not uploaded');
             return back()->with('error', 'Image upload failed');
         }
-
-        echo 'File Name: '.$file->getClientOriginalName();
-        echo '<br>';
-        echo 'File Extension: '.$file->getClientOriginalExtension();
-        echo '<br>';
-        echo 'File Real Path: '.$file->getRealPath();
-        echo '<br>';
-        echo 'File Size: '.$file->getSize();
-        echo '<br>';
-        echo 'File Mime Type: '.$file->getMimeType();
-        echo '<br>';
-
-        $destinationPath = "storage/images";
-
-        if($file->move($destinationPath, $file->getClientOriginalName())) {
-            echo 'File moved';
-        } else {
-            echo 'File not moved';
-        }
-
-        // Crear un nuevo espacio
-        $space = new Space();
-        $space->title = $request->input('title');
-        $space->description = $request->input('description');
-        $space->image = $file ?? '';
-        $space->save();
-
-        // Redireccionar con un mensaje de éxito
-       
     }
 
     public function indexAdmin()

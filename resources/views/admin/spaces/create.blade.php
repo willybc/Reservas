@@ -13,7 +13,6 @@
     <!-- Content -->
     <div class="card">
         <div class="card-body">
-            <?php echo sys_get_temp_dir(); ?>
             <form method="POST" action="{{ route('spaces.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
