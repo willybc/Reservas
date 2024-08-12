@@ -54,33 +54,45 @@
                             </thead>
 
                             <tbody>
+                                @foreach($spaces as $space)
                                 <tr>
                                     <td>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck1">
-                                            <label for="customCheck1" class="form-check-label">&nbsp;</label>
+                                            <input type="checkbox" class="form-check-input" id="customCheck{{ $space-> id }}">
+                                            <label for="customCheck{{ $space-> id }}" class="form-check-label">&nbsp;</label>
                                         </div>
                                     </td>
                                     <td>
-                                        <img src="https://coderthemes.com/hyper_2/saas/assets/images/products/product-6.jpg" alt="contact-img" title="contact-img" class="rounded me-3" height="100">
+                                        <img src="{{ asset('storage/' . $space-> image) }}" alt="thumb" title="contact-img" class="rounded me-3" height="100">
                                     </td>
                                     <td>
-                                        Title
+                                        {{ $space -> title }}
                                     </td>
                                     <td>
-                                        <h5 class="my-0">Usuario</h5>
+                                        <h5 class="my-0">{{ $space-> users_count ?? 'N/A' }}</h5>
                                     </td>
                                     <td>
-                                        <h5 class="my-0">5</h5>
+                                        <h5 class="my-0">{{ $space-> reservations_count ?? 'N/A' }}</h5>
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="fa-solid fa-pen"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="fa-solid fa-trash"></i></a>
+                                        <a href="{{ route('admin.spaces.edit', $space->id) }}" class="action-icon"> <i class="fa-solid fa-pen"></i></a>
+                                        <a href="{{ route('admin.spaces.destroy', $space->id) }}" class="action-icon" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $space->id }}').submit();"> <i class="fa-solid fa-trash"></i></a>
+                                        <form id="delete-form-{{ $space->id }}" action="{{ route('admin.spaces.destroy', $space->id) }}" method="POST" style="display: none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
+
+                    @if($spaces->isEmpty())
+                        <p class="text-center">
+                            No spaces found.
+                        </p>
+                    @endif
                 </div>
             </div>
         </div>

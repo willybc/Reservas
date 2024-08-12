@@ -25,6 +25,18 @@ Route::get('/spaces/create', [SpaceController::class, 'createAdmin'])
     ->middleware(['auth'])
     ->name('admin.spaces.create');
 
+Route::get('/spaces/{id}/edit', [SpaceController::class, 'editAdmin'])
+    ->middleware(['auth'])
+    ->name('admin.spaces.edit');
+
+Route::put('/spaces/{id}', [SpaceController::class, 'update'])
+    ->middleware(['auth'])
+    ->name('admin.spaces.update');
+
+Route::delete('/spaces/{id}', [SpaceController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('admin.spaces.destroy');
+
 Route::post('/spaces', [SpaceController::class, 'store'])
     ->middleware(['auth'])
     ->name('spaces.store');

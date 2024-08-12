@@ -60,6 +60,40 @@ class SpaceController extends Controller
 
     public function createAdmin()
     {
-        return view('admin.spaces.create');
+        return view('admin.spaces.form');
     }
+
+    public function editAdmin($idSpace) {
+        $space = Space::findOrFail($idSpace);
+        return view('admin.spaces.form', compact('space'));
+    }
+
+    public function update(Request $request, $idSpace) {
+        $request -> validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $space = Space::findOrFail($idSpace);
+        $space->title = $request->input('title');
+        $space->description = $request->input('description');
+
+        if($request -> hasFile('image')) {
+            $file = $request-> file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('images', $fileName, 'public');
+            $space-> image = $filePath;
+        }
+
+        $space->save();
+        return redirect()->route('admin.spaces')->with('success', 'Space updated successfully');
+    }
+
+    public function destroy($idSpace) {
+        $space = Space::findOrFail($idSpace);
+        $space->delete();
+        return redirect()->route('admin.spaces')->with('success', 'Space deleted successfully');
+    }
+
+
 }
