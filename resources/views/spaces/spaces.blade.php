@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-sm-4 col-xs-12 pjShBReservationImage">
                                 <a href="#" class="pjShBNewReservation" data-id="{{ $space->id }}">
-                                    <img src="{{ $image_url }}" alt="" />
+                                    <img class="img-fluid" src="{{ $image_url }}" alt="" />
                                 </a>
                             </div>
                             <div class="col-lg-7 col-md-7 col-sm-8 col-xs-12 pjShBReservationContent">
