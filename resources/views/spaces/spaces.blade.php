@@ -44,7 +44,7 @@
 <style>
     .card-reserva {
         margin: 0 8px 8px 0;
-        background-color: #f9f9f9;
+        background-color: #eef2f7;
         transition: background-color .1s ease-in-out;
         break-inside: avoid;
         cursor: pointer;
@@ -54,7 +54,7 @@
         padding-top: 1rem;
         padding-bottom: 0.8rem;
         padding-left: 20px;
-        border-bottom: 1px solid #f9f9f9;
+        border-bottom: 1px solid #eef2f7;
     }
 
     .card-reserva_header h3 {

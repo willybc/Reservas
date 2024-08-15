@@ -2,19 +2,12 @@
 
 @section('content')
 <div class="container-fluid container-dashboard" style="padding-right: 1.5rem; padding-left: 1.5rem;">
-    <div class="row row-dashboard">
-        <div class="col-12">
-            <div class="page-title-box">
-                <h4 class="page-title">Spaces</h4>
-            </div>
-        </div>
-    </div>
-
     <!-- Content -->
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <h4 class="page-title" style="margin-bottom: 1rem;">Spaces</h4>
                     <div class="row mb-2">
                         <div class="col-xl-8">
                             <form class="row gy-2 gx-2 align-items-center justify-content-xl-start justify-content-between">
@@ -58,29 +51,23 @@
                                 <tr>
                                     <td>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck{{ $space-> id }}">
-                                            <label for="customCheck{{ $space-> id }}" class="form-check-label">&nbsp;</label>
+                                            <input type="checkbox" class="form-check-input" id="customCheck{{ $space->id }}">
+                                            <label for="customCheck{{ $space->id }}" class="form-check-label">&nbsp;</label>
                                         </div>
                                     </td>
                                     <td>
-                                        <img src="{{ asset('storage/' . $space-> image) }}" alt="thumb" title="contact-img" class="rounded me-3" height="100">
+                                        <img src="{{ asset('storage/' . $space->image) }}" alt="thumb" title="contact-img" class="rounded me-3" height="100">
                                     </td>
+                                    <td>{{ $space->title }}</td>
+                                    <td><h5 class="my-0">{{ $space->users_count ?? 'N/A' }}</h5></td>
+                                    <td><h5 class="my-0">{{ $space->reservations_count ?? 'N/A' }}</h5></td>
                                     <td>
-                                        {{ $space -> title }}
-                                    </td>
-                                    <td>
-                                        <h5 class="my-0">{{ $space-> users_count ?? 'N/A' }}</h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="my-0">{{ $space-> reservations_count ?? 'N/A' }}</h5>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.spaces.edit', $space->id) }}" class="action-icon"> <i class="fa-solid fa-pen"></i></a>
-                                        <a href="{{ route('admin.spaces.destroy', $space->id) }}" class="action-icon" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $space->id }}').submit();"> <i class="fa-solid fa-trash"></i></a>
-                                        <form id="delete-form-{{ $space->id }}" action="{{ route('admin.spaces.destroy', $space->id) }}" method="POST" style="display: none;">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
+                                        <a href="{{ route('admin.spaces.edit', $space->id) }}" class="action-icon"> 
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                        <a href="#" class="action-icon" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $space->id }}"> 
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -88,16 +75,52 @@
                         </table>
                     </div>
 
+                    <!-- Modal DELETE -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que deseas eliminar este espacio con ID: <span id="spaceId">...</span>? Esta acción no se puede deshacer.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <form id="deleteForm" method="POST" action="">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     @if($spaces->isEmpty())
-                        <p class="text-center">
-                            No spaces found.
-                        </p>
+                        <p class="text-center">No se encontraron espacios.</p>
                     @endif
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var spaceId = button.getAttribute('data-id');
+            var form = deleteModal.querySelector('#deleteForm');
+            var spaceIdSpan = deleteModal.querySelector('#spaceId');
+            form.action = '{{ url("/spaces") }}/' + spaceId;
+            spaceIdSpan.textContent = spaceId; // Mostrar el ID en el modal
+        });
+    });
+</script>
 @endsection
