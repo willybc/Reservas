@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Space;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,9 @@ class SpaceController extends Controller
     public function index()
     {
         $spaces = Space::all();
-        return view('home', compact('spaces'));
+        $users = User::whereHas('spaces')->distinct()->get();
+        
+        return view('home', compact('spaces', 'users'));
     }
 
     public function show($id)
@@ -41,8 +44,10 @@ class SpaceController extends Controller
             $space = new Space();
             $space->title = $request->input('title');
             $space->description = $request->input('description');
-            $space->image = $filePath; // Guardar la ruta relativa en lugar de la ruta temporal
+            $space->image = $filePath;
             $space->save();
+
+            $space->users()->attach((auth()->id()));
     
             Log::info('Image uploaded and data saved successfully');
             return redirect()->back()->with('success', 'Image uploaded successfully!');
@@ -54,8 +59,10 @@ class SpaceController extends Controller
 
     public function indexAdmin()
     {
-        $spaces = Space::all();
-        return view('admin.spaces', compact('spaces'));
+        $spaces = Space::with('users')->get(); // Carga los usuarios relacionados con cada espacio
+        $users = User::whereHas('spaces')->distinct()->get();
+
+        return view('admin.spaces', compact('spaces', 'users'));
     }
 
     public function createAdmin()

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        @include('components.filters.filter')
+        <x-filters.filter :isAdmin="false" :users="$users"/>
 
         @include('spaces.spaces')
     </div>

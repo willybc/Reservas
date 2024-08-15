@@ -8,25 +8,8 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="page-title" style="margin-bottom: 1rem;">Spaces</h4>
-                    <div class="row mb-2">
-                        <div class="col-xl-8">
-                            <form class="row gy-2 gx-2 align-items-center justify-content-xl-start justify-content-between">
-                                <div class="col-6">
-                                    <label for="inputPassword2" class="visually-hidden">Search</label>
-                                    <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="col-xl-4">
-                            <div class="text-xl-end mt-xl-0 mt-2">
-                                <a href="{{ route('admin.spaces.create') }}" class="btn btn-danger mb-2 me-2">
-                                    <i class="fa-solid fa-plus"></i>
-                                    Add New Space
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <x-filters.filter :isAdmin="true" :users="$users"/>
 
                     <div class="table-responsive table-spaces">
                         <table class="table table-centered table-nowrap mb-0">
@@ -40,7 +23,7 @@
                                     </th>
                                     <th>Thumb</th>
                                     <th>Title</th>
-                                    <th>Users</th>
+                                    <th>User</th>
                                     <th>Reservations</th>
                                     <th>Action</th>
                                 </tr>
@@ -59,7 +42,13 @@
                                         <img src="{{ asset('storage/' . $space->image) }}" alt="thumb" title="contact-img" class="rounded me-3" height="100">
                                     </td>
                                     <td>{{ $space->title }}</td>
-                                    <td><h5 class="my-0">{{ $space->users_count ?? 'N/A' }}</h5></td>
+                                    <td>
+                                    @forelse($space->users as $user)
+                                        <h5 class="my-0">{{ $user->name }}</h5>
+                                    @empty
+                                        <h5 class="my-0">No User</h5>
+                                    @endforelse
+                                    </td>
                                     <td><h5 class="my-0">{{ $space->reservations_count ?? 'N/A' }}</h5></td>
                                     <td>
                                         <a href="{{ route('admin.spaces.edit', $space->id) }}" class="action-icon"> 

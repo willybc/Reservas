@@ -13,7 +13,9 @@
                 <div class="card-reserva" data-id="{{ $space->id }}">
                     <div class="card-reserva_header">
                         <h3>{{ $space->title }}</h3>
-                        <span>{{ '@' . @Usuario }}</span>
+                        <span>
+                            {{ $space->users->first()->name ?? 'Null' }}
+                        </span>
                     </div>
                     <div class="card-reserva_body">
                         <div class="card-reserva_body__image-container">
