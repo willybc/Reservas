@@ -1,50 +1,109 @@
-<div class="pjShBBody">
-    @if($spaces->isEmpty())
-        <p>{{ __('No assets found.') }}</p>
-    @else
-        <ul class="list-unstyled pjShBReservations">
-            @foreach($spaces as $space)
-                @php
-                    $image_url = asset('images/default-image.png');
-                    if (!empty($space->image)) {
-                        $image_url = asset('storage/' . $space->image);
-                    }
-                @endphp
-                <li class="pjShBReservation">
-                    <div class="thumbnail">
-                        <div class="row">
-                            <div class="col-lg-5 col-md-5 col-sm-4 col-xs-12 pjShBReservationImage">
-                                <a href="#" class="pjShBNewReservation" data-id="{{ $space->id }}">
-                                    <img class="img-fluid" src="{{ $image_url }}" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-lg-7 col-md-7 col-sm-8 col-xs-12 pjShBReservationContent">
-                                <p class="pjShBReservationTitle">
-                                <a href="{{ route('space.show', ['id' => $space->id]) }}" class="pjShBNewReservation" data-id="{{ $space->id }}">
-                                        {{ $space->title }}
-                                    </a>
-                                </p>
-                                <p>{{ Str::limit($space->description, 400) }}</p>
-                                @if(!empty($space->dt_from) && !empty($space->dt_to))
-                                    @php
-                                        $dt_from = \Carbon\Carbon::parse($space->dt_from)->format('d-m-Y, H:i');
-                                        $dt_to = \Carbon\Carbon::parse($space->dt_to)->format('d-m-Y, H:i');
-                                    @endphp
-                                    <dl class="dl-horizontal pjShBReservationMeta">
-                                        <dt>{{ __('front_my_reservation') }}:</dt>
-                                        <dd>{{ $dt_from }} - {{ $dt_to }}</dd>
-                                    </dl>
-                                @endif
-                                <div class="pjShBReservationActions">
-                                    <a href="#" class="btn btn-primary pjShBNewReservation" data-id="{{ $space->id }}">
-                                        New reservation
-                                    </a>
-                                </div>
-                            </div>
+@if($spaces->isEmpty())
+    <p>{{ __('No assets found.') }}</p>
+@else
+    <div class="row">
+        @foreach($spaces as $space)
+            @php
+                $image_url = asset('images/default-image.png');
+                if (! empty($space->image)) {
+                    $image_url = asset('storage/' . $space->image);
+                }
+            @endphp
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card-reserva">
+                    <div class="card-reserva_header">
+                        <h3>{{ $space->title }}</h3>
+                        <span>{{ @Usuario }}</span>
+                    </div>
+                    <div class="card-reserva_body">
+                        <div class="card-reserva_body__image-container">
+                            <img src="{{ $image_url }}" alt="">
                         </div>
                     </div>
-                </li>
-            @endforeach
-        </ul>
-    @endif
-</div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+@endif
+
+
+<style>
+    .card-reserva {
+        margin: 0 8px 8px 0;
+        background-color: #f9f9f9;
+        transition: background-color .1s ease-in-out;
+        break-inside: avoid;
+        cursor: pointer;
+    }
+
+    .card-reserva_header {
+        padding-top: 1rem;
+        padding-bottom: 0.8rem;
+        padding-left: 20px;
+        border-bottom: 1px solid #f9f9f9;
+    }
+
+    .card-reserva_header h3 {
+        color: black;
+        margin-bottom: 0;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 18px;
+        line-height: 1.1;
+    }
+
+    .card-reserva_header span {
+        color: #333;
+        opacity: .5;
+        font-weight: 400;
+        font-size: 12px;
+    }
+
+    .card-reserva_body {
+        position: relative;
+    }
+
+    .card-reserva_body__image-container {
+        position: relative;
+        padding-top: 56.25%;
+        transition: all .2s ease-in;
+    }
+
+    .card-reserva_body__image-container:hover {
+        opacity: .8;
+    }
+
+    .card-reserva_body__image-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        border-radius: 7px;
+    }
+
+    .card-reserva_body__image-container:after {
+        content: 'Reservar';
+        display: flex;
+        color: #fff;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 72px;
+        border-radius: 5px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 36px;
+        background: #000;
+        transition: all 0.2s ease-in;
+    }
+
+    .card-reserva_body__image-container:hover:after {
+        background: #bf9e51;
+    }
+</style>
