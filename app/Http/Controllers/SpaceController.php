@@ -6,19 +6,31 @@ use App\Models\Space;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class SpaceController extends Controller
 {
     public function index(Request $request) {
-        $query = Space::with('users');
+        $searchQuery = $request->input('search');
+        $userId = $request->input('user_id');
 
-        // Filtrar por nombre de espacio si está presente
-        if ($request->has('search')) {
-            $query->where('title', 'like', '%' . $request->input('search') . '%');
+        $spacesQuery = Space::query();
+
+        if ($searchQuery) {
+            $spacesQuery->where('title', 'like', '%' . $searchQuery . '%');
+        }
+    
+        if ($userId) {
+            $spacesQuery->whereExists(function ($query) use ($userId) {
+                $query->select(DB::raw(1))
+                    ->from('spaces_users')
+                    ->join('users', 'users.id', '=', 'spaces_users.user_id')
+                    ->whereRaw('spaces_users.space_id = spaces.id')
+                    ->where('spaces_users.user_id', $userId);
+            });
         }
 
-        $spaces = $query->get();
+        $spaces = $spacesQuery->get();
         $users = User::whereHas('spaces')->distinct()->get();
         $isAdmin = $request->route()->getName() === 'admin.spaces';
 

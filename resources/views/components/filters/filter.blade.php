@@ -13,7 +13,7 @@
 
             <div class="{{ $isAdmin ? 'col-4' : 'col-4' }} col-filter">
                 <label for="">Filtrar por usuarios</label>
-                <select class="form-select" aria-label="Default select example">
+                <select id="selectInput" class="form-select" aria-label="Default select example">
                     <option selected>Todos</option>
                     @foreach($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -45,31 +45,52 @@
 </div>
 
 <script>
+    function fetchSpaces(searchInput, selectInput, resultContainer) {
+        var searchQuery = searchInput.value;
+        var userId = selectInput.value;
+        var url = window.location.pathname;
+        var params = new URLSearchParams();
+
+        if (searchQuery) {
+            params.append('search', searchQuery);
+        }
+
+        if (userId && userId !== 'Todos') {
+            params.append('user_id', userId);
+        }
+
+        fetch(url + '?' + params.toString(), {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => response.text())
+            .then(html => {
+                resultContainer.innerHTML = html;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Setup event listeners
     document.addEventListener('DOMContentLoaded', function () {
         var resultContainer = document.getElementById('resultContainer');
         if (resultContainer) {
             var searchInput = document.getElementById('searchInput');
+            var selectInput = document.getElementById('selectInput');
 
+            // Event listener for search input
             searchInput.addEventListener('input', function () {
-                var searchQuery = this.value;
-                var url = window.location.pathname;
+                fetchSpaces(searchInput, selectInput, resultContainer);
+            });
 
-                fetch(url + '?search=' + searchQuery, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest' // Indica que es una solicitud AJAX
-                    }
-                })
-                    .then(response => response.text())
-                    .then(html => {
-                        resultContainer.innerHTML = html;
-                    })
-                    .catch(error => console.error('Error:', error));
-            })
+            // Event listener for user select
+            selectInput.addEventListener('change', function () {
+                fetchSpaces(searchInput, selectInput, resultContainer);
+            });
         } else {
             console.error('Error: resultContainer not found');
         }
-
-    })
+    });
 </script>
 
 <style>
