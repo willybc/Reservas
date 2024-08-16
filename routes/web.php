@@ -17,7 +17,7 @@ Route::get('/dashboard', [HomeController::class, 'indexAdmin'])
     ->middleware(['auth'])
     ->name('admin.dashboard');
 
-Route::get('/spaces', [SpaceController::class, 'indexAdmin'])
+Route::get('/spaces', [SpaceController::class, 'index'])
     ->middleware(['auth'])
     ->name('admin.spaces');
 

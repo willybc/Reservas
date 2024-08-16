@@ -1,38 +1,39 @@
-@if($spaces->isEmpty())
-    <p>{{ __('No assets found.') }}</p>
-@else
-    <div class="row">
-        @foreach($spaces as $space)
-            @php
-                $image_url = asset('images/default-image.png');
-                if (! empty($space->image)) {
-                    $image_url = asset('storage/' . $space->image);
-                }
-            @endphp
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card-reserva" data-id="{{ $space->id }}">
-                    <div class="card-reserva_header">
-                        <h3>{{ $space->title }}</h3>
-                        <span>
-                            {{ $space->users->first()->name ?? 'Null' }}
-                        </span>
-                    </div>
-                    <div class="card-reserva_body">
-                        <div class="card-reserva_body__image-container">
-                            <img src="{{ $image_url }}" alt="">
+<div id="resultContainer">
+    @if($spaces->isEmpty())
+        <p>{{ __('No assets found.') }}</p>
+    @else
+        <div class="row">
+            @foreach($spaces as $space)
+                @php
+                    $image_url = asset('images/default-image.png');
+                    if (! empty($space->image)) {
+                        $image_url = asset('storage/' . $space->image);
+                    }
+                @endphp
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card-reserva" data-id="{{ $space->id }}">
+                        <div class="card-reserva_header">
+                            <h3>{{ $space->title }}</h3>
+                            <span>
+                                {{ $space->users->first()->name ?? 'Null' }}
+                            </span>
+                        </div>
+                        <div class="card-reserva_body">
+                            <div class="card-reserva_body__image-container">
+                                <img src="{{ $image_url }}" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
-
-@endif
+            @endforeach
+        </div>
+    @endif
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const cards = document.querySelectorAll('.card-reserva');
-        
+
         cards.forEach(card => {
             card.addEventListener('click', function () {
                 const spaceId = this.getAttribute('data-id');

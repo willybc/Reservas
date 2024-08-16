@@ -26,8 +26,8 @@
     <div class="col-6 col-search">
         <div class="row">
             <div class="{{ $isAdmin ? 'col-8' : 'col-4' }}">
-                <label for="inputPassword2" class="visually-hidden">Search</label>
-                <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
+                <label for="searchInput" class="visually-hidden">Search</label>
+                <input type="search" class="form-control" id="searchInput" placeholder="Buscar...">
             </div>
 
             @if($isAdmin)
@@ -43,6 +43,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var resultContainer = document.getElementById('resultContainer');
+        if (resultContainer) {
+            var searchInput = document.getElementById('searchInput');
+
+            searchInput.addEventListener('input', function () {
+                var searchQuery = this.value;
+                var url = window.location.pathname;
+
+                fetch(url + '?search=' + searchQuery, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest' // Indica que es una solicitud AJAX
+                    }
+                })
+                    .then(response => response.text())
+                    .then(html => {
+                        resultContainer.innerHTML = html;
+                    })
+                    .catch(error => console.error('Error:', error));
+            })
+        } else {
+            console.error('Error: resultContainer not found');
+        }
+
+    })
+</script>
 
 <style>
     .row-filter {

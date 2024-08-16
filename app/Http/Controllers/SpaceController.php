@@ -10,14 +10,29 @@ use Illuminate\Support\Facades\Storage;
 
 class SpaceController extends Controller
 {
-    public function index()
-    {
-        $spaces = Space::all();
-        $users = User::whereHas('spaces')->distinct()->get();
-        
-        return view('home', compact('spaces', 'users'));
-    }
+    public function index(Request $request) {
+        $query = Space::with('users');
 
+        // Filtrar por nombre de espacio si está presente
+        if ($request->has('search')) {
+            $query->where('title', 'like', '%' . $request->input('search') . '%');
+        }
+
+        $spaces = $query->get();
+        $users = User::whereHas('spaces')->distinct()->get();
+        $isAdmin = $request->route()->getName() === 'admin.spaces';
+
+        if ($request->ajax()) {
+            if($isAdmin) {
+                return view('admin.spaces.table', compact('spaces'))->render();
+            } else {
+                return view('spaces.spaces', compact('spaces'))->render();
+            }
+        }
+
+        return view($isAdmin ? 'admin.spaces' : 'home', compact('spaces', 'users', 'isAdmin'));
+    }
+    
     public function show($id)
     {
         $space = Space::findOrFail($id);
@@ -55,14 +70,6 @@ class SpaceController extends Controller
             Log::error('File not uploaded');
             return back()->with('error', 'Image upload failed');
         }
-    }
-
-    public function indexAdmin()
-    {
-        $spaces = Space::with('users')->get(); // Carga los usuarios relacionados con cada espacio
-        $users = User::whereHas('spaces')->distinct()->get();
-
-        return view('admin.spaces', compact('spaces', 'users'));
     }
 
     public function createAdmin()
