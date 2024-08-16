@@ -1,27 +1,41 @@
 <div class="row row-filter">
+
     <div class="col-6">
         <div class="row">
-            @if(! $isAdmin)
-                <div class="col-6 col-filter">
-                    <label for="">Verificar Disponibilidad</label>
-                    <button type="button" class="btn btn-outline-secondary">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        Selecciona el rango de fechas
-                    </button>
+            @if(! $isPageUsers)
+                @if(! $isAdmin)
+                    <div class="col-6 col-filter">
+                        <label for="">Verificar Disponibilidad</label>
+                        <button type="button" class="btn btn-outline-secondary">
+                            <i class="fa-regular fa-calendar-days"></i>
+                            Selecciona el rango de fechas
+                        </button>
+                    </div>
+                @endif
+
+                <div class="{{ $isAdmin ? 'col-4' : 'col-4' }} col-filter">
+                    <label for="">Filtrar por usuarios</label>
+                    <select id="selectInput" class="form-select" aria-label="Default select Users">
+                        <option selected>Todos</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @else
+                <div class="col-4 col-filter">
+                    <label for="">Filtrar por Rol</label>
+                    <select id="selectInput" class="form-select" aria-label="Default select Roles">
+                        <option selected>Todos</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->role }}</option>
+                        @endforeach
+                    </select>
                 </div>
             @endif
-
-            <div class="{{ $isAdmin ? 'col-4' : 'col-4' }} col-filter">
-                <label for="">Filtrar por usuarios</label>
-                <select id="selectInput" class="form-select" aria-label="Default select example">
-                    <option selected>Todos</option>
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
-            </div>
         </div>
     </div>
+
 
     <div class="col-6 col-search">
         <div class="row">
@@ -30,16 +44,26 @@
                 <input type="search" class="form-control" id="searchInput" placeholder="Buscar...">
             </div>
 
-            @if($isAdmin)
+            @if($isAdmin and ! $isPageUsers)
                 <div class="col-4">
                     <div class="text-xl-end mt-xl-0 mt-2">
                         <a href="{{ route('admin.spaces.create') }}" class="btn btn-danger mb-2 me-2">
                             <i class="fa-solid fa-plus"></i>
-                            Add New Space
+                            New Space
+                        </a>
+                    </div>
+                </div>
+            @elseif ($isPageUsers)
+                <div class="col-4">
+                    <div class="text-xl-end mt-xl-0 mt-2">
+                        <a href="{{ route('admin.users.create')}}" class="btn btn-danger mb-2 me-2">
+                            <i class="fa-solid fa-plus"></i>
+                            New User
                         </a>
                     </div>
                 </div>
             @endif
+
         </div>
     </div>
 </div>

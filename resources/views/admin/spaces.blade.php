@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h4 class="page-title" style="margin-bottom: 1rem;">Spaces</h4>
                     
-                    <x-filters.filter :isAdmin="true" :users="$users"/>
+                    <x-filters.filter :isAdmin="true" :isPageUsers="false" :users="$users"/>
 
                     @include('admin.spaces.table')
 

@@ -45,10 +45,32 @@ Route::get('/reservations', [ReservationController::class, 'indexAdmin'])
     ->middleware(['auth'])
     ->name('admin.reservations');
 
+/* Usuarios */
 Route::get('/users', [UserController::class, 'indexAdmin'])
     ->middleware(['auth'])
     ->name('admin.users');
 
+Route::get('/users/create', [UserController::class, 'createAdmin'])
+    ->middleware(['auth'])
+    ->name('admin.users.create');
+
+Route::get('/users/{id}/edit', [UserController::class, 'editAdmin'])
+    ->middleware(['auth'])
+    ->name('admin.user.edit');
+
+Route::post('/users', [UserController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('admin.user.store');
+
+Route::put('/users/{id}', [UserController::class, 'update'])
+    ->middleware(['auth'])
+    ->name('admin.user.update');
+
+Route::delete('/users/{id}', [UserController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('admin.user.destroy');
+    
+/* Options */
 Route::get('/options', [OptionController::class, 'indexAdmin'])
     ->middleware(['auth'])
     ->name('admin.options');
