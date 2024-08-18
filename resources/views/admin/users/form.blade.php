@@ -13,7 +13,7 @@
     <!-- Content -->
     <div class="card">
         <div class="card-body">
-            <form action="{{ isset($user) ? route('admin.user.update', $user->id) : route('admin.user.store') }}"
+            <form action="{{ isset($user) ? route('admin.users.update', $user->id) : route('admin.users.store') }}"
                 method="POST" enctype="multipart/form-data">
                 @csrf
                 @if(isset($user))

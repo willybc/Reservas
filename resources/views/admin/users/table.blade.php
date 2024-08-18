@@ -11,7 +11,7 @@
                     </th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Role_id</th>
+                    <th>Rol</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -32,7 +32,7 @@
                         </td>
                         <td>{{ $user->role->role ?? 'NULL' }}</td>
                         <td>
-                            <a href="{{ route('admin.user.edit', $user->id) }}" class="action-icon">
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="action-icon">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
                             <a href="#" class="action-icon" data-bs-toggle="modal" data-bs-target="#deleteModal"
@@ -84,7 +84,7 @@
             var userId = button.getAttribute('data-id');
             var form = deleteModal.querySelector('#deleteForm');
             var userIdSpan = deleteModal.querySelector('#userId');
-            form.action = '{{ url("/users") }}/' + userId;
+            form.action = '{{ url("/admin/users") }}/' + userId;
             userIdSpan.textContent = userId; // Mostrar el ID en el modal
         });
     });

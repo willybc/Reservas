@@ -11,66 +11,57 @@ use App\Http\Controllers\OptionController;
 Route::get('/', [SpaceController::class, 'index'])->name('home');
 Route::get('/loadResource/{id}', [SpaceController::class, 'show'])->name('space.show');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::get('/dashboard', [HomeController::class, 'indexAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.dashboard');
+Route::middleware('auth')->group(function () {
 
-Route::get('/spaces', [SpaceController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('admin.spaces');
+    Route::get('/admin/dashboard', [HomeController::class, 'indexAdmin'])
+        ->name('admin.dashboard');
 
-Route::get('/spaces/create', [SpaceController::class, 'createAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.spaces.create');
+    /* Spaces Admin */
+    Route::get('/admin/spaces', [SpaceController::class, 'index'])
+        ->name('admin.spaces');
 
-Route::get('/spaces/{id}/edit', [SpaceController::class, 'editAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.spaces.edit');
+    Route::get('/admin/spaces/create', [SpaceController::class, 'createAdmin'])
+        ->name('admin.spaces.create');
 
-Route::put('/spaces/{id}', [SpaceController::class, 'update'])
-    ->middleware(['auth'])
-    ->name('admin.spaces.update');
+    Route::get('/admin/spaces/{id}/edit', [SpaceController::class, 'editAdmin'])
+        ->name('admin.spaces.edit');
 
-Route::delete('/spaces/{id}', [SpaceController::class, 'destroy'])
-    ->middleware(['auth'])
-    ->name('admin.spaces.destroy');
+    Route::put('/admin/spaces/{id}', [SpaceController::class, 'update'])
+        ->name('admin.spaces.update');
 
-Route::post('/spaces', [SpaceController::class, 'store'])
-    ->middleware(['auth'])
-    ->name('spaces.store');
+    Route::delete('/admin/spaces/{id}', [SpaceController::class, 'destroy'])
+        ->name('admin.spaces.destroy');
 
-Route::get('/reservations', [ReservationController::class, 'indexAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.reservations');
+    Route::post('/admin/spaces', [SpaceController::class, 'store'])
+        ->name('admin.spaces.store');
 
-/* Usuarios */
-Route::get('/users', [UserController::class, 'indexAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.users');
+    /* Reservations Admin */
+    Route::get('/admin/reservations', [ReservationController::class, 'indexAdmin'])
+        ->name('admin.reservations');
 
-Route::get('/users/create', [UserController::class, 'createAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.users.create');
+    /* Users Admin */
+    Route::get('/admin/users', [UserController::class, 'indexAdmin'])
+        ->name('admin.users');
 
-Route::get('/users/{id}/edit', [UserController::class, 'editAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.user.edit');
+    Route::get('/admin/users/create', [UserController::class, 'createAdmin'])
+        ->name('admin.users.create');
 
-Route::post('/users', [UserController::class, 'store'])
-    ->middleware(['auth'])
-    ->name('admin.user.store');
+    Route::get('/admin/users/{id}/edit', [UserController::class, 'editAdmin'])
+        ->name('admin.users.edit');
 
-Route::put('/users/{id}', [UserController::class, 'update'])
-    ->middleware(['auth'])
-    ->name('admin.user.update');
+    Route::post('/admin/users', [UserController::class, 'store'])
+        ->name('admin.users.store');
 
-Route::delete('/users/{id}', [UserController::class, 'destroy'])
-    ->middleware(['auth'])
-    ->name('admin.user.destroy');
-    
-/* Options */
-Route::get('/options', [OptionController::class, 'indexAdmin'])
-    ->middleware(['auth'])
-    ->name('admin.options');
+    Route::put('/admin/users/{id}', [UserController::class, 'update'])
+        ->name('admin.users.update');
+
+    Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])
+        ->name('admin.users.destroy');
+
+    /* Options Admin */
+    Route::get('/admin/options', [OptionController::class, 'indexAdmin'])
+        ->name('admin.options');
+        
+});

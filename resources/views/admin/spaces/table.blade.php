@@ -94,7 +94,7 @@
             var spaceId = button.getAttribute('data-id');
             var form = deleteModal.querySelector('#deleteForm');
             var spaceIdSpan = deleteModal.querySelector('#spaceId');
-            form.action = '{{ url("/spaces") }}/' + spaceId;
+            form.action = '{{ url("/admin/spaces") }}/' + spaceId;
             spaceIdSpan.textContent = spaceId; // Mostrar el ID en el modal
         });
     });
