@@ -13,55 +13,61 @@ Route::get('/loadResource/{id}', [SpaceController::class, 'show'])->name('space.
 
 require __DIR__ . '/auth.php';
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('admin')->group(function () {
 
-    Route::get('/admin/dashboard', [HomeController::class, 'indexAdmin'])
-        ->name('admin.dashboard');
+    Route::middleware('role:Admin')->group(function() {
 
-    /* Spaces Admin */
-    Route::get('/admin/spaces', [SpaceController::class, 'index'])
-        ->name('admin.spaces');
+        /* Spaces */
+        Route::get('/dashboard', [HomeController::class, 'indexAdmin'])
+            ->name('admin.dashboard');
 
-    Route::get('/admin/spaces/create', [SpaceController::class, 'createAdmin'])
-        ->name('admin.spaces.create');
+        Route::get('/spaces', [SpaceController::class, 'index'])
+            ->name('admin.spaces');
 
-    Route::get('/admin/spaces/{id}/edit', [SpaceController::class, 'editAdmin'])
-        ->name('admin.spaces.edit');
+        Route::get('/spaces/create', [SpaceController::class, 'createAdmin'])
+            ->name('admin.spaces.create');
 
-    Route::put('/admin/spaces/{id}', [SpaceController::class, 'update'])
-        ->name('admin.spaces.update');
+        Route::get('/spaces/{id}/edit', [SpaceController::class, 'editAdmin'])
+            ->name('admin.spaces.edit');
 
-    Route::delete('/admin/spaces/{id}', [SpaceController::class, 'destroy'])
-        ->name('admin.spaces.destroy');
+        Route::put('/spaces/{id}', [SpaceController::class, 'update'])
+            ->name('admin.spaces.update');
 
-    Route::post('/admin/spaces', [SpaceController::class, 'store'])
-        ->name('admin.spaces.store');
+        Route::delete('/spaces/{id}', [SpaceController::class, 'destroy'])
+            ->name('admin.spaces.destroy');
+        
+        Route::post('/spaces', [SpaceController::class, 'store'])
+            ->name('admin.spaces.store');
 
-    /* Reservations Admin */
-    Route::get('/admin/reservations', [ReservationController::class, 'indexAdmin'])
-        ->name('admin.reservations');
+        /* Reservations */
+        Route::get('/reservations', [ReservationController::class, 'indexAdmin'])
+            ->name('admin.reservations');
 
-    /* Users Admin */
-    Route::get('/admin/users', [UserController::class, 'indexAdmin'])
-        ->name('admin.users');
+        /* Users */
+        Route::get('/users', [UserController::class, 'indexAdmin'])
+            ->name('admin.users');
 
-    Route::get('/admin/users/create', [UserController::class, 'createAdmin'])
-        ->name('admin.users.create');
+        Route::get('/users/create', [UserController::class, 'createAdmin'])
+            ->name('admin.users.create');
 
-    Route::get('/admin/users/{id}/edit', [UserController::class, 'editAdmin'])
-        ->name('admin.users.edit');
+        Route::get('/users/{id}/edit', [UserController::class, 'editAdmin'])
+            ->name('admin.users.edit');
 
-    Route::post('/admin/users', [UserController::class, 'store'])
-        ->name('admin.users.store');
+        Route::post('/users', [UserController::class, 'store'])
+            ->name('admin.users.store');
 
-    Route::put('/admin/users/{id}', [UserController::class, 'update'])
-        ->name('admin.users.update');
+        Route::put('/users/{id}', [UserController::class, 'update'])
+            ->name('admin.users.update');
 
-    Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])
-        ->name('admin.users.destroy');
+        Route::delete('/users/{id}', [UserController::class, 'destroy'])
+            ->name('admin.users.destroy');
 
-    /* Options Admin */
-    Route::get('/admin/options', [OptionController::class, 'indexAdmin'])
-        ->name('admin.options');
+        /* Options Admin */
+        Route::get('/options', [OptionController::class, 'indexAdmin'])
+            ->name('admin.options');
+    });
+   
+
+    
         
 });

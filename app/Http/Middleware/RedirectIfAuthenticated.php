@@ -23,6 +23,19 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                if ($request->is('admin/*')) {
+                    // Evitar redirigir a admin-login si ya está autenticado
+                    if ($request->routeIs('admin-login')) {
+                        return $next($request);
+                    }
+                    return redirect(RouteServiceProvider::ADMINISTRATOR);
+                }
+
+                // Evitar redirigir a login si ya está autenticado
+                if ($request->routeIs('login')) {
+                    return $next($request);
+                }
+
                 return redirect(RouteServiceProvider::HOME);
             }
         }

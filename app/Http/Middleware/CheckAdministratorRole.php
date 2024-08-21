@@ -12,19 +12,20 @@ class CheckAdministratorRole
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  \Closure  $next
+     * @param  string  $role
+     * @return mixed
      */
-    public function handle(Request $request, Closure $next)
-    {
-        $user = Auth::user();
+    public function handle(Request $request, Closure $next, $role) {
 
-        if ($user && ($user->hasRole(1) || $user->hasRole(2))) {
-            return $next($request);
-        }
+        if ($request->user()->hasRole($role) == false) {
+            Auth::logout();
 
-        return redirect()->route('login')->withErrors([
-            'error' => 'No tiene permisos para acceder a la parte administrativa.',
-        ]);
+            return redirect()->route('admin-login')->withErrors([
+                'error' => 'No tiene permisos para acceder.',
+            ]);
+        }        
+
+        return $next($request);
     }
 }

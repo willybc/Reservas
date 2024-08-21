@@ -50,7 +50,17 @@ class User extends Authenticatable
         return $this -> belongsTo(Role::class, 'role_id');
     }
 
-    public function hasRole($roleId) {
-        return $this->role_id === $roleId;
+    public function hasRole($roleName) {
+        $roles = [
+            'Admin' => 3,
+            'Assistant' => 2,
+            'User' => 1
+        ];
+
+        $userRole = $this->role->role;
+        #debug userrole
+        #dd($userRole);
+        // Verifica si el rol del usuario es mayor o igual al rol requerido en la jerarquía
+        return isset($roles[$userRole]) && $roles[$userRole] >= $roles[$roleName];
     }
 }

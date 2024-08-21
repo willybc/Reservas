@@ -82,7 +82,11 @@
                                 <ul class="navbar-nav ms-auto" style="flex-direction: row; justify-content: flex-end; gap: 2rem;">
                                     <!-- Authentication Links -->
                                     @guest
-                                    @if (Route::has('login'))
+                                    @if (Route::has('admin-login'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin-login') }}">{{ __('Login') }}</a>
+                                    </li>
+                                    @elseif (Route::has('login'))
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                     </li>

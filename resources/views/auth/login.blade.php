@@ -51,6 +51,16 @@
                             </div>
                         </div>
 
+                        @if ($errors->has('error'))
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $errors->first('error') }}
+                                </div>  
+                            </div>
+                        </div>
+                        @endif
+
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
