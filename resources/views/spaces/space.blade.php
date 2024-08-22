@@ -15,6 +15,15 @@
         <div class="col-6">
             <h1>{{ $space->title }}</h1>
             <p>{{ Str::limit($space->description, 400) }}</p>
+            <h3>
+                Reglas para reservar
+            </h3>
+            <ul>
+                <li>entre {{ $space->getMinReservationLengthWithUnit() }} y {{ $space->getMaxReservationLengthWithUnit() }}</li>
+                <!-- <li>up to 4hours per day</li>
+                <li>cancel 1 hours in advance</li> -->
+            </ul>
+
             @auth
             <a href="#" class="btn btn-primary pjShBNewReservation" data-id="{{ $space->id }}">
                 New reservation

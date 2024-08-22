@@ -59,6 +59,11 @@ class SpaceController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'min_reservation_length' => 'required|integer|min:1',
+            'max_reservation_length' => 'required|integer|min:1',
+
+            'min_reservation_length_unit' => 'required|string',
+            'max_reservation_length_unit' => 'required|string',
         ]);
 
         // Almacenar la imagen en public/images
@@ -72,6 +77,11 @@ class SpaceController extends Controller
             $space->title = $request->input('title');
             $space->description = $request->input('description');
             $space->image = $filePath;
+            $space->min_reservation_length = $request->input('min_reservation_length');
+            $space->max_reservation_length = $request->input('max_reservation_length');
+            $space->min_reservation_length_unit = $request->input('min_reservation_length_unit');
+            $space->max_reservation_length_unit = $request->input('max_reservation_length_unit');
+            
             $space->save();
 
             $space->users()->attach((auth()->id()));
@@ -98,11 +108,20 @@ class SpaceController extends Controller
         $request -> validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'min_reservation_length' => 'required|integer|min:1',
+            'max_reservation_length' => 'required|integer|min:1',
+
+            'min_reservation_length_unit' => 'required|string',
+            'max_reservation_length_unit' => 'required|string',
         ]);
 
         $space = Space::findOrFail($idSpace);
         $space->title = $request->input('title');
         $space->description = $request->input('description');
+        $space->min_reservation_length = $request->input('min_reservation_length');
+        $space->max_reservation_length = $request->input('max_reservation_length');
+        $space->min_reservation_length_unit = $request->input('min_reservation_length_unit');
+        $space->max_reservation_length_unit = $request->input('max_reservation_length_unit');
 
         if($request -> hasFile('image')) {
             $file = $request-> file('image');
